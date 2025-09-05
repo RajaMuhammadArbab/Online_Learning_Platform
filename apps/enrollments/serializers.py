@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from .models import Enrollment, LessonProgress
 from apps.courses.serializers import CourseSerializer
-from apps.courses.models import Course   # ✅ Direct import
+from apps.courses.models import Course   
 
 
 class EnrollmentSerializer(serializers.ModelSerializer):
     course = CourseSerializer(read_only=True)
     course_id = serializers.PrimaryKeyRelatedField(
-        write_only=True, source="course", queryset=Course.objects.all()  # ✅ FIX
+        write_only=True, source="course", queryset=Course.objects.all()  
     )
     student = serializers.ReadOnlyField(source="student.username")
 
@@ -37,3 +37,4 @@ class LessonProgressSerializer(serializers.ModelSerializer):
         model = LessonProgress
         fields = ("id", "enrollment", "lesson", "watched", "watched_at")
         read_only_fields = ("watched_at",)
+
